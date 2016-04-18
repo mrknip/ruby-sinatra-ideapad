@@ -16,6 +16,10 @@ set :root, 'lib/app'
   end
 
   # CREATE
+  get '/new' do
+    erb :new
+  end
+
   post '/' do
     IdeaStore.create(params[:idea])
     redirect '/'
