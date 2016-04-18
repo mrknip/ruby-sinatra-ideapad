@@ -20,9 +20,9 @@ describe 'IdeaPad' do
   describe 'POST /' do
     before do 
       mock_idea = Idea.new({'title' => 'sure', 'description' => 'whatever'})
-      IdeaStore = double('IdeaStore')
-      allow(IdeaStore).to receive(:create).and_return(nil)
-      allow(IdeaStore).to receive(:all).and_return([mock_idea])
+      MockStore = double('IdeaStore')
+      allow(MockStore).to receive(:create).and_return(nil)
+      allow(MockStore).to receive(:all).and_return([mock_idea])
     end
 
     it 'successfully redirects to "/"' do
@@ -34,8 +34,8 @@ describe 'IdeaPad' do
 
     # TODO: get mocking to work on IdeaStore class
     it 'creates a new idea' do
-      expect(IdeaStore).to receive(:create)
-      IdeaStore.create({'title' => 'sure', 'description' => 'whatever'})
+      expect(MockStore).to receive(:create)
+      MockStore.create({'title' => 'sure', 'description' => 'whatever'})
       # post_idea('test_title', 'test_description')
     end
   end
