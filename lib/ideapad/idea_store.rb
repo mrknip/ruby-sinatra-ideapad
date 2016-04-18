@@ -6,10 +6,20 @@ class IdeaStore
   end
 
   def self.create(attributes)
+    # TODO: clean tag input
+    # TODO: use strings throughout
+    
     database.transaction do 
       database['ideas'] ||= []
-      database['ideas'] << attributes
+      database['ideas'] << clean!(attributes)
     end
+  end
+
+  def self.clean!(attributes)
+    unless attributes['tags'].respond_to? :each
+      attributes['tags'] = attributes['tags'].split(',').map { |tag| tag.strip }
+    end
+    attributes
   end
 
   def self.all
@@ -26,6 +36,11 @@ class IdeaStore
     end
   end
 
+  # TODO: sort out case-sensitivity
+  def self.tagged(filter)
+    all.select { |idea| idea.tags.any? { |tag| tag =~ /#{Regexp.quote(filter)}/i } }
+  end
+
   def self.find(id)
     raw_idea = find_raw_idea(id)
     Idea.new(raw_idea.merge('id' => id))
@@ -39,7 +54,7 @@ class IdeaStore
 
   def self.update(id, data)
     database.transaction do
-      database['ideas'][id] = data
+      database['ideas'][id] = clean!(data)
     end
   end
 

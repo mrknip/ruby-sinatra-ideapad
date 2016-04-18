@@ -1,4 +1,12 @@
-<a href="/new">New Idea</a>
+<a href="/new">New Idea</a><br>
+
+<form action='/' method="GET">
+	<p>Filter by tag</p>
+	<input type="text" name="tag"/>
+	<input type="submit" value="Filter">
+	<a href='/'>Clear</a>
+</form>
+
 
 <h3>Ideas!</h3>
 <ul>
@@ -12,6 +20,7 @@
 			<br>
 			<%= idea.description %>
 			<br>
+			<em>Tags: <%= idea.tags.join(", ") %></em><br>
 			<form action="/<%= idea.id %>" method='POST'>
 				<input type="hidden" name="_method" value="DELETE"/>
 				<input type="submit" value="delete"/>

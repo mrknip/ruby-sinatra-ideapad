@@ -12,7 +12,11 @@ set :root, 'lib/app'
 
   # READ
   get '/' do 
-    erb :index, locals: { ideas: IdeaStore.all.sort }
+    if params['tag'] 
+      erb :index, locals: { ideas: IdeaStore.tagged(params['tag']).sort }
+    else
+      erb :index, locals: { ideas: IdeaStore.all.sort } unless params['tag']
+    end
   end
 
   # CREATE
