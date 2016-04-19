@@ -2,7 +2,11 @@ require_relative 'spec_helper'
 
 # TODO: use a test database
 
-describe 'IdeaPad' do
+describe 'IdeaPad routes' do
+  before :all do
+    build_database
+  end
+
   describe 'GET /' do
     before { get '/'}
 
@@ -18,13 +22,6 @@ describe 'IdeaPad' do
   end
 
   describe 'POST /' do
-    before do 
-      mock_idea = Idea.new({'title' => 'sure', 'description' => 'whatever'})
-      MockStore = double('IdeaStore')
-      allow(MockStore).to receive(:create).and_return(nil)
-      allow(MockStore).to receive(:all).and_return([mock_idea])
-    end
-
     it 'successfully redirects to "/"' do
       post_idea('test_title', 'test_description')
       expect(last_response.redirect?).to be true
@@ -34,8 +31,8 @@ describe 'IdeaPad' do
 
     # TODO: get mocking to work on IdeaStore class
     it 'creates a new idea' do
-      expect(MockStore).to receive(:create)
-      MockStore.create({'title' => 'sure', 'description' => 'whatever'})
+      expect(IdeaStore).to receive(:create)
+      IdeaStore.create({'title' => 'sure', 'description' => 'whatever'})
       # post_idea('test_title', 'test_description')
     end
   end
