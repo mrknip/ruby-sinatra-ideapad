@@ -12,7 +12,7 @@
 <ul>
 	<% ideas.each do |idea| %>
 		<li>
-			Idea <%= idea.id %>: <%= idea.title %> | Rank : <%= idea.rank %>
+			<b>Idea <%= idea.id %>: <%= idea.title %></b> | Rank : <%= idea.rank %>
 			<a href="/<%= idea.id %>/edit">Edit</a> 
 			<form action="/<%= idea.id %>/like" method='POST' style="display: inline">
 				<input type="submit" value="+"/>
